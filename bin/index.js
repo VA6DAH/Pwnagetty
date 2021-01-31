@@ -186,10 +186,8 @@ function convertFile(file) {
                 console.log("Found PMKID");
                 resolve(true)
             } else {
-               resolve("No PMKID found.")
-                    }
-                });
-            }
+                resolve("No PMKID found.")
+                     }
         });
     })
 }
@@ -215,7 +213,7 @@ async function main() {
         if (!fs.existsSync('./pmkid')) {
             fs.mkdirSync('./pmkid');
         }
-
+        
         // Loop over files that were downloaded
         for (let file of files) {
             // Create filename
@@ -266,4 +264,3 @@ async function main() {
 }
 
 main();
-

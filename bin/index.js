@@ -182,17 +182,11 @@ function convertFile(file) {
         let convertPMKIDs = exec(`hcxpcapngtool -o ./pmkid/${file.replace('.pcap', '')}.pmkid ${config.localDir + file}`, function (error, stdout) {
             if (error) { reject(error) };
 
-            if (stdout.includes("PMKID(s) written")) {
+            if (stdout.includes("PMKID written")) {
                 console.log("Found PMKID");
                 resolve(true)
             } else {
-                let convertHCCAPX = exec(`hcxpcapngtool -o ./hccapx/${file.replace('.pcap', '')}.hccapx ${config.localDir + file}`, function (error, stdout) {
-                    if (error) { reject(error) };
-                    if (stdout.includes("handshake(s) written")) {
-                        console.log("Found Handshake");
-                        resolve(true)
-                    } else {
-                        resolve("No PMKID or Handshake found.")
+               resolve("No PMKID found.")
                     }
                 });
             }
@@ -220,10 +214,6 @@ async function main() {
         // if '/pmkid' doesn't exist, create it.
         if (!fs.existsSync('./pmkid')) {
             fs.mkdirSync('./pmkid');
-        }
-        // if '/hccapx' doesn't exist, create it.
-        if (!fs.existsSync('./hccapx')) {
-            fs.mkdirSync('./hccapx');
         }
 
         // Loop over files that were downloaded
